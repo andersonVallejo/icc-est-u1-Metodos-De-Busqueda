@@ -1,52 +1,53 @@
 import models.Person;
 import java.util.Scanner;
+
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner scaneo = new Scanner(System.in);
 
-        System.out.print("¿Cuántas personas desea ingresar?: ");
-        int n = sc.nextInt();
-        sc.nextLine(); // limpiar buffer
+        System.out.print("Ingrese cantidad de personas: ");
+        int n = scaneo.nextInt();
+        scaneo.nextLine();
 
-        Person[] people = new Person[n];
+        Person[] personas = new Person[n];
 
-        // Ingresar datos
         for (int i = 0; i < n; i++) {
-            System.out.println("\nPersona " + (i + 1));
+            System.out.println("\nIngrese Persona:");
 
-            System.out.print("Ingrese el nombre: ");
-            String nombre = sc.nextLine();
+            System.out.print("Nombre: ");
+            String nombre = scaneo.nextLine();
 
-            System.out.print("Ingrese la edad: ");
-            int edad = sc.nextInt();
-            sc.nextLine(); // limpiar buffer
+            System.out.print("Edad: ");
+            int edad = scaneo.nextInt();
+            scaneo  .nextLine();
 
-            people[i] = new Person(nombre, edad);
+            personas[i] = new Person(nombre, edad);
         }
 
-        // Ordenar
-        BusquedaBinaria busqueda = new BusquedaBinaria();
-        busqueda.sortByName(people);
+        BusquedaBinaria bb = new BusquedaBinaria();
 
-        System.out.println("\nPersonas ordenadas:");
-        for (Person person : people) {
-            System.out.println(person);
+        // ORDENAR
+        bb.ordenarPorEdad(personas);
+
+        System.out.println("\nArreglo ordenado:");
+        for (Person p : personas) {
+            System.out.print(p.getAge() + " | ");
         }
+        System.out.println();
 
-        // Buscar
-        System.out.print("\nIngrese el nombre a buscar: ");
-        String nameToFind = sc.nextLine();
+        // BUSCAR
+        System.out.print("\nValor a buscar: ");
+        int edadBuscar = scaneo.nextInt();
 
-        int index = busqueda.findByName(people, nameToFind);
+        int pos = bb.buscarPorEdad(personas, edadBuscar);
 
-        if (index != -1) {
-            System.out.println("Encontrado: " + people[index]);
+        if (pos != -1) {
+            System.out.println("\nLa persona con la edad " + edadBuscar +
+                    " es " + personas[pos].getName());
         } else {
-            System.out.println(nameToFind + " no encontrado.");
+            System.out.println("Edad no encontrada.");
         }
-
-        sc.close();
     }
 }
 
